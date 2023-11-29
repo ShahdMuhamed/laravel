@@ -22,15 +22,15 @@ class UserController extends Controller
         $validatedData = $request-> validate([
             'name' => ['required' , 'min:3'],
             'email' => ['required' , 'email'],
-            
+
             // 'password'=>'required|confirmed|min:6'
-            // 'password'=>'min:2'
+            'password'=>'min:2'
 
         ]);
 
 
         //hash password
-  dd($request->all(),$validatedData ,  $request->all()['password']);
+//   dd($request->all(),$validatedData ,  $request->all()['password']);
          $validatedData['password'] = bcrypt($validatedData['password']);
          $user = User::create($validatedData); //for creation
 
@@ -39,7 +39,7 @@ class UserController extends Controller
         //  session();
         //  Session::
 
-         auth()->login($user);
+         
          Auth::login($user);
          return redirect('/')-> with('message' , 'user created and logged in successfully');
     }
