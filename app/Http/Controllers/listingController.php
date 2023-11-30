@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+// use auth;
 use App\Models\listing;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class listingController extends Controller
 {
@@ -54,6 +57,7 @@ public function store(request $request){
             'description'=>'required'
         ] //validations
         );
+        $formFields['user_id'] = Auth::id();
 if($request-> hasFile('logo')){
     $formFields['logo'] = $request->file('logo')->store('logos' , 'public'); //store de ba7ut feha esm el folder
 }
@@ -75,6 +79,12 @@ public function edit(listing $listing){
 //to update
 public function update(request $request , listing $listing){
     // dd($request->all());
+
+//check if user is owner
+if($listing->user_id != Auth::id()){
+    abort(403, 'Unauthorized Action');
+}
+
     $formFields = $request-> validate(
         [
             'title' => 'required',
@@ -86,6 +96,7 @@ public function update(request $request , listing $listing){
             'description'=>'required'
         ] //validations
         );
+        $formFields['user_id'] = Auth::id();
 if($request-> hasFile('logo')){
     $formFields['logo'] = $request->file('logo')->store('logos' , 'public'); //store de ba7ut feha esm el folder
 }
@@ -101,8 +112,19 @@ if($request-> hasFile('logo')){
 
 //to delete
 public function destroy(listing $listing){
+    if($listing->user_id != Auth::id()){
+        abort(403, 'Unauthorized Action');
+    }
+
     $listing->delete();
    return redirect('/')->with('message' , 'listing is deleted successfully');
+
+}
+
+
+//show manage listing
+public function manage(){
+    return view('listings/manage' , ['listings'=> auth()->user()->Listing()->get()]);
 
 }
 }

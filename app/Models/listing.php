@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Models;
-
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class listing extends Model
 {
@@ -22,4 +23,9 @@ class listing extends Model
 ->orwhere('tags','like','%'.request('search').'%');
         }
     }
+//relation with table user
+public function user(){
+    return $this->belongsTo(User::class , 'user_id'); //el class ely hwa m3ah el relation we esm el column
+
+}
 }

@@ -54,13 +54,13 @@
                 type="password"
                 class="border border-gray-200 rounded p-2 w-full"
                 name="password"
-                {{-- value="{{old('password')}}" --}}
+                value="{{old('password')}}"
             />
         </div>
-        {{-- @error('password')
+        @error('password')
         <p class="text-red-500 text-xs mt-1"> {{$message}}</p>
 
-    @enderror --}}
+    @enderror
         <div class="mb-6">
             <label
                 for="password_confirmation"
@@ -72,13 +72,13 @@
                 type="password"
                 class="border border-gray-200 rounded p-2 w-full"
                 name="password_confirmation"
-                {{-- value="{{old('password_confirmation')}}" --}}
+                value="{{old('password_confirmation')}}"
             />
         </div>
-        {{-- @error('password_confirmation')
+        @error('password_confirmation')
         <p class="text-red-500 text-xs mt-1"> {{$message}}</p>
 
-    @enderror --}}
+    @enderror
         <div class="mb-6">
             <button
                 type="submit"
